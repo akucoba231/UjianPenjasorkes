@@ -139,7 +139,7 @@
         let tmp = window.location.href.split('index.html')[0]
         let a = document.createElement('a')
         a.href = tmp + "utama.html?token=" + token.value
-        return confirm('Anda akan dialihkan') ? a.click() : '';
+        return confirm('Anda akan dialihkan : ' + a.href) ? a.click() : '';
       }
     </script>
 </body>
