@@ -135,9 +135,9 @@
       let token = document.getElementById('token')
       let submit = document.getElementById('submit')
       submit.onclick = (e)=>{
-        e.preventDefault()
+       // e.preventDefault()
         let tmp = window.location.href.split('index.html')[0]
-        /*window.location.href = */ alert(tmp + "utama.html?token=" + token.value)
+        window.location.href = tmp + "utama.html?token=" + token.value
       }
     </script>
 </body>
