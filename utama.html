@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluasi Analitis PJOK SMA dengan AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <h1 id="judul-ujian">Evaluasi Analitis PJOK SMA dengan AI</h1>
+    
+    <div class="intro" id="deskripsi-ujian">
+        <p>Website ini menampilkan soal uraian analitis untuk mata pelajaran PJOK tingkat SMA. Sistem akan menganalisis jawaban Anda menggunakan pendekatan <span class="keyword">Natural Language Processing (NLP)</span>, dan memberikan penilaian otomatis berdasarkan :</p>
+        <ul>
+            <li>Kesesuaian konsep</li>
+            <li>Kelengkapan jawaban</li>
+            <li>Kedalaman analisis</li>
+            <li>Penggunaan istilah teknis yang tepat</li>
+        </ul>
+    </div>
+
+    <div id="questions-container">
+        <!-- Hanya container untuk soal, konten akan diisi oleh JavaScript -->
+    </div>
+
+    <div id="no-soal" class="ns-gone">
+        <p>Tidak ada soal yang ditemukan</p>
+    </div>
+
+    <div id="load-screen" class="ns-gone">
+        <span id="err-msg">Sedang memuat soal...</span>
+    </div>
+
+    <div class="score-display" id="score-display">
+        <h2>Skor Akhir Anda: <span id="total-score">0</span>/100</h2>
+        <p id="score-feedback"></p>
+    </div>
+
+    <div id="login" class="l-disabled">
+        <div class="header">
+            <h3>Sebelum mengerjakan ujian, mohon isi data diri terlebih dahulu</h3>
+        </div>
+        <div id="form">
+            <input class="datadiri" id="nama" type="text" placeholder="Masukan nama" />
+            <input class="datadiri" id="kelas" type="text" placeholder="Masukan kelas" />
+            <input class="datadiri" id="absen" type="text" placeholder="Masukan nomor absen" />
+            <input class="datadiri" id="tanggal" type="date" placeholder="Masukan tanggal ujian" />
+            <input class="datadiri" id="id_lembar_ujian" type="hidden" value="0" />
+            <input class="datadiri" id="id_tema" type="hidden" />
+            <input class="datadiri" id="total_score" type="hidden" value="0" />
+            <input class="datadiri" id="judul_tema" type="hidden" />
+            <button id="submit">Mulai mengerjakan</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    <script src="url.js"></script>
+    <script src="apiService.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

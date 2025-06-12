@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Google Forms Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #673ab7; /* Deep Purple */
+            --primary-dark-color: #512da8;
+            --accent-color: #03a9f4; /* Light Blue */
+            --text-color: #202124;
+            --secondary-text-color: #5f6368;
+            --background-color: #f0f0f0;
+            --card-background-color: #ffffff;
+            --border-color: #dadce0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .login-container {
+            background-color: var(--card-background-color);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px var(--shadow-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            box-sizing: border-box;
+            text-align: center;
+            border-top: 10px solid var(--primary-color);
+        }
+
+        .login-container h1 {
+            color: var(--text-color);
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: var(--secondary-text-color);
+            margin-bottom: 8px;
+        }
+
+        .input-group input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            color: var(--text-color);
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: auto;
+            min-width: 120px;
+        }
+
+        .submit-button:hover {
+            background-color: var(--primary-dark-color);
+        }
+
+        .submit-button:active {
+            background-color: var(--primary-dark-color);
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 30px 20px;
+                border-top: 8px solid var(--primary-color);
+            }
+
+            .login-container h1 {
+                font-size: 20px;
+                margin-bottom: 25px;
+            }
+
+            .submit-button {
+                width: 100%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Portal Ujian Penjasorkes</h1>
+        <form action="#" method="POST">
+            <div class="input-group">
+                <label for="token">Token</label>
+                <input type="text" id="token" name="token" placeholder="Masukkan token Anda di sini" required>
+            </div>
+            <button type="submit" class="submit-button" id="submit">Submit</button>
+        </form>
+    </div>
+    
+    <script>
+      let token = document.getElementById('token')
+      let submit = document.getElementById('submit')
+      submit.onclick = (e)=>{
+        //let tmp = window.location.href
+        window.location.href = "utama.html"
+      }
+    </script>
+</body>
+</html>
