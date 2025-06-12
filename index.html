@@ -135,8 +135,8 @@
       let token = document.getElementById('token')
       let submit = document.getElementById('submit')
       submit.onclick = (e)=>{
-        //let tmp = window.location.href
-        window.location.href = "utama.html"
+        let tmp = window.location.href.split('index.html')[]
+        window.location.href = tmp + "utama.html?token=" + token
       }
     </script>
 </body>
