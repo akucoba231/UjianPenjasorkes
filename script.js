@@ -300,7 +300,9 @@ function loadScreen() {
 //nlp ini akan memeriksa kesesuaian jawaban dengan jawaban ideal
 
 function getNilaiNLP(referenceData, value) {
-    referenceData = JSON.parse(JSON.stringify(referenceData));
+    //referenceData = JSON.parse(JSON.stringify(referenceData));
+    referenceData = cleanTextFromWord(referenceData);
+    value = cleanTextFromWord(value)
     const options = {
         keys: ['text'],
         includeScore: true,
@@ -497,4 +499,48 @@ function getToken(){
   else {
     forbidden();
   }
+}
+
+function cleanTextFromWord(text) {
+    if (typeof text !== 'string') {
+        return ''; // Pastikan input adalah string
+    }
+
+    // Langkah 1: Normalisasi karakter newline
+    // Ms. Word di Windows sering menggunakan '\r\n' (CRLF) untuk newline.
+    // Web (textarea) umumnya menggunakan '\n' (LF).
+    // Jadi, kita konversi semua '\r\n' atau '\r' menjadi '\n' tunggal.
+    let cleaned = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+    // Langkah 2: Ganti karakter tab (\t) dengan spasi
+    // Tab bisa jadi masalah jika Anda ingin semua spasi menjadi konsisten.
+    cleaned = cleaned.replace(/\t/g, ' ');
+
+    // Langkah 3: Hapus spasi berlebih di awal/akhir setiap baris
+    // Ms. Word bisa menyisakan spasi di akhir baris, atau baris kosong.
+    cleaned = cleaned.split('\n').map(line => line.trim()).join('\n');
+
+    // Langkah 4: Hapus baris-baris kosong berlebih
+    // Jika ada banyak baris kosong karena format Word, ini akan membersihkannya.
+    cleaned = cleaned.replace(/\n\s*\n/g, '\n'); // Ganti 2 atau lebih newline dengan 1 newline jika di antaranya hanya ada spasi
+    cleaned = cleaned.replace(/^\s*\n/gm, ''); // Hapus baris kosong di awal dokumen
+    cleaned = cleaned.replace(/\n\s*$/gm, ''); // Hapus baris kosong di akhir dokumen
+
+    // Langkah 5: Ganti spasi ganda menjadi spasi tunggal
+    // Ini membantu jika ada spasi berlebih yang tidak diinginkan di dalam teks.
+    cleaned = cleaned.replace(/\s+/g, ' ');
+
+    // Langkah 6: Normalisasi karakter Unicode (opsional tapi direkomendasikan)
+    // Ms. Word sering menggunakan karakter "smart quotes" (‘ ’ “ ”) dan em-dashes (—)
+    // yang berbeda dari karakter ASCII standar (' " -). Ini bisa menyebabkan ketidakcocokan.
+    cleaned = cleaned.replace(/[\u2018\u2019]/g, "'"); // Smart single quotes
+    cleaned = cleaned.replace(/[\u201C\u201D]/g, '"'); // Smart double quotes
+    cleaned = cleaned.replace(/[\u2013\u2014]/g, '-'); // En/Em dashes
+    cleaned = cleaned.replace(/[\u2026]/g, '...');   // Ellipsis
+    cleaned = cleaned = cleaned.normalize("NFC"); // Normalisasi bentuk Unicode (misalnya, karakter dengan diakritik)
+
+    // Langkah 7: Hapus spasi di awal dan akhir keseluruhan string
+    cleaned = cleaned.trim();
+
+    return cleaned;
 }
