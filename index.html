@@ -101,6 +101,10 @@
             transform: translateY(1px);
         }
 
+        #redirect {
+            display: none;
+        }
+
         @media (max-width: 600px) {
             .login-container {
                 padding: 30px 20px;
@@ -131,17 +135,18 @@
         </form>
     </div>
 
-    <a href="utama.html?token=PJOK-JAYA">klik</a>
+    <a id="redirect" href="utama.html?token=">klik</a>
     
     <script>
       let token = document.getElementById('token')
       let submit = document.getElementById('submit')
       submit.onclick = (e)=>{
         e.preventDefault()
-        let tmp = window.location.href.split('index.html')[0]
-        let a = document.createElement('a')
-        a.href = tmp + "utama.html?token=" + token.value
-        return confirm('Anda akan menuju : ' + a.href) ? a.click() : '';
+        //let tmp = window.location.href.split('index.html')[0]
+        let a = document.getElementById('redirect');
+        let tmp = a.href;
+        a.href = tmp + token.value;
+        a.click();
       }
     </script>
 </body>
