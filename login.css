@@ -1,0 +1,131 @@
+:root {
+    --primary-color: #4CAF50; /* Hijau yang lebih cerah, mirip warna sukses */
+    --primary-dark: #388E3C;
+    --text-color: #333;
+    --background-light: #f0f2f5;
+    --border-color: #ddd;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.2);
+}
+
+#login {
+    position: fixed;
+    z-index: 90;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6); /* Lebih gelap untuk overlay yang jelas */
+    display: flex; /* Dipindahkan ke sini untuk centering */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    backdrop-filter: blur(5px); /* Efek blur pada latar belakang */
+    -webkit-backdrop-filter: blur(5px); /* Untuk kompatibilitas Safari */
+    opacity: 0; /* Mulai dengan tidak terlihat */
+    transition: opacity 0.3s ease-in-out; /* Transisi untuk fade in/out */
+    pointer-events: none; /* Nonaktifkan interaksi saat tidak terlihat */
+}
+
+#login.l-active {
+    opacity: 1; /* Tampilkan saat aktif */
+    pointer-events: auto; /* Aktifkan interaksi saat aktif */
+}
+
+#login .header {
+  width: 90%;
+  text-align: center;
+}
+
+/* Container utama untuk form login, menggantikan #login > * */
+#login .login-card {
+    background: #fff;
+    width: 90%; /* Lebih lebar di mobile */
+    max-width: 450px; /* Lebar maksimum untuk desktop */
+    margin: 0.5% auto; /* Tidak terlalu relevan lagi karena flexbox parent */
+    padding: 30px; /* Padding yang lebih besar */
+    text-align: center;
+    border: none; /* Hapus border default */
+    border-radius: 12px; /* Sudut membulat yang lebih besar */
+    color: var(--text-color);
+    box-shadow: 0 10px 30px var(--shadow-medium); /* Shadow yang lebih menonjol */
+    transform: translateY(20px); /* Mulai sedikit ke bawah */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+#login.l-active .login-card {
+    transform: translateY(0); /* Geser ke posisi normal saat aktif */
+    opacity: 1;
+}
+
+/* Header bagian atas form */
+#login .login-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color); /* Garis pemisah */
+}
+
+#login .login-header h3 {
+    color: var(--primary-dark); /* Warna judul yang lebih gelap */
+    font-size: 1.8em;
+    margin: 0;
+}
+
+/* Bagian form input */
+#login #form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Jarak antar input */
+    align-items: stretch; /* Memastikan input mengambil lebar penuh */
+}
+
+#login #form > input:not([type="hidden"]) { /* Target input yang terlihat */
+    padding: 12px 15px; /* Padding yang lebih nyaman */
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Sudut input yang lebih halus */
+    font-size: 1em; /* Ukuran font yang standar */
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#login #form > input:not([type="hidden"]):focus {
+    border-color: var(--primary-color); /* Border highlight saat fokus */
+    outline: none; /* Hapus outline default browser */
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2); /* Efek shadow saat fokus */
+}
+
+#login #form > input::placeholder {
+    color: #999;
+}
+
+#login #submit {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); /* Gradient pada tombol */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px; /* Sudut tombol yang membulat */
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px; /* Jarak dari input terakhir */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#login #submit:hover {
+    box-shadow: 0 6px 15px var(--shadow-medium);
+    transform: translateY(-2px); /* Efek sedikit naik saat hover */
+}
+
+#login #submit:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+/* Kelas untuk mengontrol display */
+.l-disabled {
+    display: none;
+}
+
+/* .l-active akan mengatur opacity dan transform pada #login dan .login-card */
+/* Tidak perlu display: flex; di sini karena sudah ada di #login */
