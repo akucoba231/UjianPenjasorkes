@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akses Ditolak - Forbidden</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .forbidden-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border-top: 5px solid #dc3545; /* Merah untuk error */
+        }
+
+        .forbidden-container h1 {
+            color: #dc3545; /* Merah */
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .forbidden-container p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .forbidden-container .error-code {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 20px;
+        }
+
+        .forbidden-container a {
+            display: inline-block;
+            background-color: #007bff; /* Biru */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .forbidden-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="forbidden-container">
+        <h1>⛔ Akses Ditolak!</h1>
+        <p>Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.</p>
+        <p>Silakan kembali ke halaman utama atau hubungi administrator jika Anda merasa ini adalah kesalahan.</p>
+        <a href="index.html">Kembali ke Halaman Utama</a>
+        <div class="error-code">Kode Error: 403 Forbidden</div>
+    </div>
+
+</body>
+</html>
