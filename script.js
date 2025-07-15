@@ -168,7 +168,7 @@ function updateTotalScore(dataJawaban) {
     const totalScoreDisplay = document.getElementById('score-display');
     const akhiriUjian = document.getElementById('akhiriUjian');
 
-    let totalScore = scores;
+    let totalScore = scores.reduce((a, b) => a + b, 0) / scores.length;
 
     akhiriUjian.parentNode.style.display = "block";
     //test = akhiriUjian;
@@ -196,7 +196,7 @@ function updateTotalScore(dataJawaban) {
     send.forEach(e => (e > 0) ? ok = true : ok = false);
     if (ok == true) {
         setTimeout(() => {
-            updateNilai(totalScore);
+            updateNilai(scores);
         }, 1000);
     }
 }
@@ -595,6 +595,8 @@ function setBanner(base64){
 function finish(){
     let akhir = document.body;
     let totalScore = scores.reduce((a, b) => a + b, 0) / scores.length;
+    totalScore = Math.round(totalScore*100);
+    totalScore = totalScore/100;
     akhir.setAttribute('class','bodyClass');
     akhir.innerHTML = "";
     akhir.innerHTML = `
