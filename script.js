@@ -420,7 +420,8 @@ function login(id_tema, judul_tema) {
         }
 
         loginForm.classList.replace('l-active', 'l-disabled');
-        uploadNilai(1);
+        cekNamaEmail(datadiri.nama, datadiri.email);
+        //uploadNilai(1);
     })
 
 }
@@ -430,7 +431,7 @@ function login(id_tema, judul_tema) {
 async function sendToServer(data) {
     loadScreen();
 
-    var settings = {
+    let settings = {
         "async": true,
         "crossDomain": true,
         "url": url + "lembarujian",
@@ -450,7 +451,7 @@ async function sendToServer(data) {
         id_lembar_ujian_change = response._id;
         loadScreen();
     }).fail(function (e) {
-        errMsg.textContent = "error: " + e;
+        errMsg.textContent = "error: " + JSON.stringify(e);
     });
 }
 
@@ -475,7 +476,7 @@ function kirimJawaban(jawaban) {
         console.log(response);
         //loadScreen();
     }).fail(function (e) {
-        errMsg.textContent = "error: " + e;
+        errMsg.textContent = "error: " + JSON.stringify(e);
     });
 
 }
@@ -607,4 +608,52 @@ function finish(){
     </div>
 
     `;
+}
+
+function cekNamaEmail(nama = "", email = ""){ //bisa ditambahkan email nanti
+
+    let search = {};
+    search["nama"] = nama;
+
+    if(email == ""){
+
+    }
+    else {
+        search["email"] = email;
+    }
+
+    search = JSON.stringify(search).replace(/\\"/g,'');
+
+
+    let settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": url + "lembarujian" + "?q=" + search,
+        "method": "GET",
+        "headers": {
+            "content-type": "application/json",
+            "x-apikey": myapi,
+            "cache-control": "no-cache"
+        },
+        "processData": false,
+        "data": null
+    }
+
+    console.log(settings.url);
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        if(response.length >= 1){
+            errMsg.textContent = "error: Akses dibatasi";
+            alert("Anda telah mengerjakan ujian ini, tidak dapat mengerjakan ujian ulang");
+            forbidden();
+        }
+        else {
+            loadScreen();
+            uploadNilai(1);
+       }
+        //loadScreen();
+    }).fail(function (e) {
+        errMsg.textContent = "error: " + JSON.stringify(e);
+    });
 }
