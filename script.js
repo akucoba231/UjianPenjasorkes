@@ -173,8 +173,8 @@ function updateTotalScore(dataJawaban) {
     akhiriUjian.parentNode.style.display = "block";
     //test = akhiriUjian;
     akhiriUjian.addEventListener('click',(e)=>{
-       
-        return confirm('Akhiri ujian sekarang ?') ? finish() : "";
+        
+        confirm('Akhiri ujian sekarang ?') ? finish() : "";
     })
 
     totalScoreElement.textContent = Math.round(totalScore);
@@ -192,9 +192,8 @@ function updateTotalScore(dataJawaban) {
     kirimJawaban(dataJawaban);
     // cek apakah semua jawaban sudah bernilai
     let send = scores;
-    let ok = false;
-    send.forEach(e => (e > 0) ? ok = true : ok = false);
-    if (ok == true) {
+    let ok = send.every((e)=> e > 0); // ini akan memeriksa nilai setiap item scores, jika ada satu saja nilai 0, nilainya false
+    if (ok === true) {
         setTimeout(() => {
             updateNilai(scores);
         }, 1000);
@@ -411,19 +410,31 @@ function login(id_tema, judul_tema) {
     judulTema.value = judul_tema;
 
     // simpan data
-    let submit = document.getElementById('submit');
+    //let submit = document.getElementById('submit'); // diganti form
+    let form = document.getElementById('form');
     let input = document.getElementsByClassName('datadiri');
 
+/* // fungsi submit sebelumnya diganti form
     submit.addEventListener('click', (e) => {
         for (let item of input) {
             datadiri[item.getAttribute('id')] = item.value;
         }
 
         loginForm.classList.replace('l-active', 'l-disabled');
-        cekNamaEmail(datadiri.nama, datadiri.email);
+        cekNamaEmail(ujian.id, datadiri.nama, datadiri.email);
         //uploadNilai(1);
     })
+*/
+    form.addEventListener('submit',(e)=>{
+        e.preventDefault();
 
+        for (let item of input) {
+            datadiri[item.getAttribute('id')] = item.value;
+        }
+
+        loginForm.classList.replace('l-active', 'l-disabled');
+        cekNamaEmail(ujian.id, datadiri.nama, datadiri.email);
+    })
 }
 
 
@@ -610,14 +621,14 @@ function finish(){
     `;
 }
 
-function cekNamaEmail(nama = "", email = ""){ //bisa ditambahkan email nanti
+function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan email nanti
     loadScreen()
 
     let search = {};
-    search["nama"] = nama;
+    search["id_tema"] = ujian.id
 
     if(email == ""){
-
+        search["nama"] = nama;
     }
     else {
         search["email"] = email;
