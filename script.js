@@ -89,8 +89,8 @@ function evaluateAnswer(questionNum) {
             tombolEvaluasi.removeAttribute('class');
         }
         else {
-        const keywordScore = (keywordCount / question.keyword.length) * 50;
-        const lengthScore = Math.min((answer.length / questionLength).toFixed(4) * 30, 30);
+            const keywordScore = (keywordCount / question.keyword.length) * 50;
+            const lengthScore = Math.min((answer.length / questionLength).toFixed(4) * 30, 30);
 
         const answerMatch = (nilaiNLP) * 20; //Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
 
@@ -157,25 +157,26 @@ function evaluateAnswer(questionNum) {
 
         updateTotalScore(tmpDataJawaban);
     }
-    }, 1500);
+}, 1500);
 }
 
 //let test;
+const akhiriUjian = document.getElementById('akhiriUjian');
+akhiriUjian.addEventListener('click',(e)=>{
+
+    confirm('Akhiri ujian sekarang ?') ? finish() : "";
+})
+
 // Fungsi lainnya tetap sama...
 function updateTotalScore(dataJawaban) {
     const totalScoreElement = document.getElementById('total-score');
     const scoreFeedbackElement = document.getElementById('score-feedback');
     const totalScoreDisplay = document.getElementById('score-display');
-    const akhiriUjian = document.getElementById('akhiriUjian');
-
+    
     let totalScore = scores.reduce((a, b) => a + b, 0) / scores.length;
 
     akhiriUjian.parentNode.style.display = "block";
     //test = akhiriUjian;
-    akhiriUjian.addEventListener('click',(e)=>{
-        
-        confirm('Akhiri ujian sekarang ?') ? finish() : "";
-    })
 
     totalScoreElement.textContent = Math.round(totalScore);
 
@@ -270,9 +271,9 @@ async function cekAktif(token) {
             }
         }
         else {
-           forbidden();
-       }
-   }
+         forbidden();
+     }
+ }
 } catch (error) {
     console.error('Gagal:', error);
     errMsg.textContent = "error: " + error;
@@ -663,7 +664,7 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
         else {
             loadScreen();
             uploadNilai(1);
-       }
+        }
         
     }).fail(function (e) {
         errMsg.textContent = "error: " + JSON.stringify(e);
