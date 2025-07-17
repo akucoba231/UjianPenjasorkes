@@ -51,7 +51,7 @@
         <div class="header">
             <h3>Sebelum mengerjakan ujian, mohon isi data diri terlebih dahulu</h3>
         </div>
-        <div id="form">
+        <form id="form">
             <input class="datadiri" id="nama" type="text" placeholder="Masukan nama" required />
             <input class="datadiri" id="kelas" type="text" placeholder="Masukan kelas" />
             <input class="datadiri" id="absen" type="text" placeholder="Masukan nomor absen" />
@@ -61,8 +61,8 @@
             <input class="datadiri" id="id_tema" type="hidden" />
             <input class="datadiri" id="total_score" type="hidden" value="0" />
             <input class="datadiri" id="judul_tema" type="hidden" />
-            <button id="submit">Mulai mengerjakan</button>
-        </div>
+            <button type="submit" id="submit">Mulai mengerjakan</button>
+        </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
