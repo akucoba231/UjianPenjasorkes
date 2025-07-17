@@ -611,6 +611,7 @@ function finish(){
 }
 
 function cekNamaEmail(nama = "", email = ""){ //bisa ditambahkan email nanti
+    loadScreen()
 
     let search = {};
     search["nama"] = nama;
@@ -652,7 +653,7 @@ function cekNamaEmail(nama = "", email = ""){ //bisa ditambahkan email nanti
             loadScreen();
             uploadNilai(1);
        }
-        //loadScreen();
+        
     }).fail(function (e) {
         errMsg.textContent = "error: " + JSON.stringify(e);
     });
