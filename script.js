@@ -260,7 +260,7 @@ async function cekAktif(token) {
             ujian = tmp[0];
             if(ujian.status != "Aktif") {
                 alert("Ujian tidak aktif! Silakan hubungi Admin.");
-                forbidden();
+                forbidden("Ujian tidak aktif");
             }
             else {
                 setJudulUjian(ujian.judul, ujian.deskripsi);
@@ -271,7 +271,7 @@ async function cekAktif(token) {
             }
         }
         else {
-         forbidden();
+         forbidden("Anda tidak memiliki akses ke halaman ini");
      }
  }
 } catch (error) {
@@ -534,8 +534,9 @@ function thisTime(){
   return timestamp;
 }
 
-function forbidden(){
-  window.location.href = "forbidden.html";
+function forbidden(pesan){
+  
+  window.location.href = "forbidden.html?pesan=" + encodeURI(pesan);
 }
 
 function getToken(){
@@ -545,7 +546,7 @@ function getToken(){
       return tmp[1];
   }
   else {
-    forbidden();
+    forbidden("Token ujian tidak valid");
 }
 }
 
@@ -659,7 +660,7 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
         if(response.length >= 1){
             errMsg.textContent = "error: Akses dibatasi";
             alert("Anda telah mengerjakan ujian ini, tidak dapat mengerjakan ujian ulang");
-            forbidden();
+            forbidden("Tidak diperbolehkan mengerjakan ujian dua kali.");
         }
         else {
             loadScreen();
