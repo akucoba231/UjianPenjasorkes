@@ -58,17 +58,33 @@
         .forbidden-container a:hover {
             background-color: #0056b3;
         }
+
+        #error {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <div class="forbidden-container">
         <h1>⛔ Akses Ditolak!</h1>
-        <p>Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.</p>
+        <p id="error">Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.</p>
         <p>Silakan kembali ke halaman utama atau hubungi administrator jika Anda merasa ini adalah kesalahan.</p>
         <a href="index.html">Kembali ke Halaman Utama</a>
         <div class="error-code">Kode Error: 403 Forbidden</div>
     </div>
+
+    <script>
+        let error = document.getElementById('error');
+        let url = window.location.href
+        let pesan = url.split('pesan=')
+        if(pesan.length > 1){
+            error.textContent = decodeURI(pesan[1]);
+        }
+        else {
+            // do nothing
+        }
+    </script>
 
 </body>
 </html>
