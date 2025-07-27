@@ -4,7 +4,7 @@
     const listUrl = [
         "https://nlpdata-5393.restdb.io/rest/",
         "https://nlpdata2-9d3f.restdb.io/rest/",
-        "http://localhost/aplikasi-slim/public/"
+        "https://ujianpenjas.my.id/aplikasi-slim/public/"
     ];
 
     const listApi = [
@@ -14,6 +14,6 @@
 
     let changeUrl = 0;
 
-    url = listUrl[changeUrl];
+    url = listUrl[2];
     myapi = listApi[changeUrl];
-    let slimFr = false;
+    let slimFr = true;
