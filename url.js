@@ -3,7 +3,8 @@
     let myapi = "";
     const listUrl = [
         "https://nlpdata-5393.restdb.io/rest/",
-        "https://nlpdata2-9d3f.restdb.io/rest/"
+        "https://nlpdata2-9d3f.restdb.io/rest/",
+        "http://localhost/aplikasi-slim/public/"
     ];
 
     const listApi = [
@@ -15,3 +16,4 @@
 
     url = listUrl[changeUrl];
     myapi = listApi[changeUrl];
+    let slimFr = false;
