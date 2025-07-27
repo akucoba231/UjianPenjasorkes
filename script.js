@@ -473,7 +473,7 @@ function kirimJawaban(jawaban) {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": url + "/jawaban",
+        "url": url + "jawaban",
         "method": "POST",
         "headers": {
             "content-type": "application/json",
@@ -638,11 +638,14 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
 
     search = JSON.stringify(search).replace(/\\"/g,'');
 
-
+    let carilembarujian = "lembarujian";
+    if(slimFr == true){
+        carilembarujian = carilembarujian + "/";
+    }
     let settings = {
         "async": true,
         "crossDomain": true,
-        "url": url + "lembarujian" + "?q=" + search,
+        "url": url + carilembarujian + "?q=" + search,
         "method": "GET",
         "headers": {
             "content-type": "application/json",
