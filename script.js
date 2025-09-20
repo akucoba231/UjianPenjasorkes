@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi');
+//alert('Server dalam perawatan, akses dibatasi');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
