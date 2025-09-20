@@ -1,3 +1,4 @@
+alert('Server dalam maintenance, akses dibatasi');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
