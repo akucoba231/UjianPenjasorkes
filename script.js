@@ -235,6 +235,12 @@ function writeQuestion() {
 
 const errMsg = document.getElementById('err-msg');
 
+// delay helper
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 // untuk memeriksa ujian aktif 
 async function cekAktif(token) {
     loadScreen();
@@ -245,6 +251,10 @@ async function cekAktif(token) {
     console.log(apisoal)
 
     try {
+         // delay acak 0–3000ms supaya tidak semua client barengan
+        const delay = Math.floor(Math.random() * 3000);
+        await sleep(delay);
+        
         const result = await apisoal.execute();
         //console.log(result);
         //console.log("result zero : " + JSON.stringify(result[0]));
