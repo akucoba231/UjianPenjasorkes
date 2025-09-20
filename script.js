@@ -1,4 +1,4 @@
-alert('Server dalam maintenance, akses dibatasi');
+alert('Server dalam perawatan, akses dibatasi');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -467,7 +467,11 @@ async function sendToServer(data) {
         "processData": false,
         "data": JSON.stringify(data)
     }
+    // delay acak 0–3000ms supaya tidak semua client barengan
+    const delay = Math.floor(Math.random() * 3000);
+    //await sleep(delay);
 
+    setTimeout(()=>{
     $.ajax(settings).done(function (response) {
         console.log(response);
         id_lembar_ujian = response.id_lembar_ujian;
@@ -476,6 +480,7 @@ async function sendToServer(data) {
     }).fail(function (e) {
         errMsg.textContent = "error: " + JSON.stringify(e);
     });
+    }, delay);
 }
 
 // send jawaban ke server
@@ -495,12 +500,18 @@ function kirimJawaban(jawaban) {
         "data": JSON.stringify(jawaban)
     }
 
+    // delay acak 0–3000ms supaya tidak semua client barengan
+    const delay = Math.floor(Math.random() * 3000);
+    //await sleep(delay);
+
+    setTimeout(()=>{
     $.ajax(settings).done(function (response) {
         console.log(response);
         //loadScreen();
     }).fail(function (e) {
         errMsg.textContent = "error: " + JSON.stringify(e);
     });
+    }, delay);
 
 }
 
@@ -524,12 +535,18 @@ function updateNilai(newTotal) {
         "data": JSON.stringify(tmpKirim)
     }
 
+    // delay acak 0–3000ms supaya tidak semua client barengan
+    const delay = Math.floor(Math.random() * 3000);
+    //await sleep(delay);
+
+    setTimeout(()=>{
     $.ajax(settings).done(function (response) {
         console.log(response);
         loadScreen();
     }).fail((e) => {
         errMsg.textContent = "error: " + e.toString();
     })
+    }, delay);
 }
 
 function thisTime(){
@@ -669,6 +686,10 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
 
     console.log(settings.url);
 
+    // delay acak 0–3000ms supaya tidak semua client barengan
+    const delay = Math.floor(Math.random() * 3000);
+    //await sleep(delay);
+    setTimeout(()=>{
     $.ajax(settings).done(function (response) {
         console.log(response);
         if(response.length >= 1){
@@ -684,4 +705,5 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
     }).fail(function (e) {
         errMsg.textContent = "error: " + JSON.stringify(e);
     });
+    }, delay);
 }
