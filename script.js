@@ -90,10 +90,10 @@ function evaluateAnswer(questionNum) {
             tombolEvaluasi.removeAttribute('class');
         }
         else {
-            const keywordScore = (keywordCount / question.keyword.length) * 50;
-            const lengthScore = Math.min((answer.length / questionLength).toFixed(4) * 30, 30);
+            const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
+            const lengthScore = Math.min((answer.length / questionLength).toFixed(4) * 40, 40); // tadinya 30
 
-        const answerMatch = (nilaiNLP) * 20; //Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
+        const answerMatch = (nilaiNLP) * 30; //tadinya 20 Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
 
         //jsonCheck(question.ideal);
 
