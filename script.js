@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nilai 7');
+alert('Server dalam perawatan, akses dibatasi, nilai 9');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -37,7 +37,7 @@ function evaluateAnswer(questionNum) {
     //console.log(questionNum)
     const questionIndex = questionNum;
     const question = questionsData[questionIndex];
-    console.log(question)
+    //console.log(question)
     let questionLength = question.ideal.length;
     const answerElement = document.getElementById(`answer${questionNum}`);
     const resultElement = document.getElementById(`result${questionNum}`);
@@ -90,8 +90,8 @@ function evaluateAnswer(questionNum) {
             tombolEvaluasi.removeAttribute('class');
         }
         else {
-            console.log("jwb : " + answer.length)
-            console.log("ideal : " + questionLength)
+            //console.log("jwb : " + answer.length)
+            //console.log("ideal : " + questionLength)
             const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
             const lengthScore = Math.min((answer.length / questionLength) * 40, 40); // tadinya 30
 
@@ -100,13 +100,13 @@ function evaluateAnswer(questionNum) {
         //jsonCheck(question.ideal);
 
         const score = Math.min(Math.round(keywordScore + lengthScore + answerMatch), 100);
-        console.log(score)
-        console.log(keywordScore)
-        console.log(typeof keywordScore)
-        console.log(lengthScore)
-        console.log(typeof lengthScore)
-        console.log(answerMatch)
-        console.log(typeof answerMatch)
+        //console.log(score)
+        //console.log(keywordScore)
+        //console.log(typeof keywordScore)
+        //console.log(lengthScore)
+        //console.log(typeof lengthScore)
+        //console.log(answerMatch)
+        //console.log(typeof answerMatch)
         tmpDataJawaban['score'] = score
 
         scores[questionIndex] = score;
@@ -129,9 +129,9 @@ function evaluateAnswer(questionNum) {
         resultElement.innerHTML = `
             <h4>Skor: ${score}/100</h4>
             <div class="feedback">${feedback}</div>
-            <p><strong>Nilai panjang jawaban</strong> ${(lengthScore / 30) * 100}%</p>
-            <p><strong>Kata kunci yang ditemukan:</strong> ${(keywordCount / question.keyword.length) * 100}%</p>
-            <p><strong>Kesesuaian jawaban (NLP):</strong> ${(answerMatch / 20) * 100}%</p>
+            <p><strong>Nilai panjang jawaban</strong> ${(lengthScore / 40) * 100}%</p>
+            <p><strong>Kata kunci yang ditemukan:</strong> ${(keywordScore / 30) * 100}%</p>
+            <p><strong>Kesesuaian jawaban (NLP):</strong> ${(answerMatch / 30) * 100}%</p>
             <div class="advice-section">
         `;
         if (score < 60) {
