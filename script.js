@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nilai');
+alert('Server dalam perawatan, akses dibatasi, nila2i');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -91,7 +91,7 @@ function evaluateAnswer(questionNum) {
         }
         else {
             const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
-            const lengthScore = Math.min((answer.length / questionLength).toFixed(4) * 40, 40); // tadinya 30
+            const lengthScore = Math.min(parseFloat((answer.length / questionLength).toFixed(4)) * 40, 40); // tadinya 30
 
         const answerMatch = (nilaiNLP) * 30; //tadinya 20 Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
 
