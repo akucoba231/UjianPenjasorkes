@@ -1,4 +1,4 @@
-//alert('Server dalam perawatan, akses dibatasi');
+alert('Server dalam perawatan, akses dibatasi, nilai');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -98,7 +98,10 @@ function evaluateAnswer(questionNum) {
         //jsonCheck(question.ideal);
 
         const score = Math.min(Math.round(keywordScore + lengthScore + answerMatch), 100);
-        
+        console.log(score)
+        console.log(keywordScore)
+        console.log(lengthScore)
+        console.log(answerMatch)
         tmpDataJawaban['score'] = score
 
         scores[questionIndex] = score;
