@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nilai 5');
+alert('Server dalam perawatan, akses dibatasi, nilai 6');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -90,6 +90,8 @@ function evaluateAnswer(questionNum) {
             tombolEvaluasi.removeAttribute('class');
         }
         else {
+            console.log("jwb : " + answer.length)
+            console.log("ideal : " + questionLength)
             const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
             const lengthScore = Math.min((answer.length / questionLength) * 40, 40); // tadinya 30
 
