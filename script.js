@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nilai 6');
+alert('Server dalam perawatan, akses dibatasi, nilai 7');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -37,7 +37,7 @@ function evaluateAnswer(questionNum) {
     //console.log(questionNum)
     const questionIndex = questionNum;
     const question = questionsData[questionIndex];
-    //console.log(question)
+    console.log(question)
     let questionLength = question.ideal.length;
     const answerElement = document.getElementById(`answer${questionNum}`);
     const resultElement = document.getElementById(`result${questionNum}`);
