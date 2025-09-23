@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, revisi 13');
+alert('Server dalam perawatan, akses dibatasi, revisi 14');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -308,7 +308,7 @@ async function getSoal() {
     const apisoal = new ApiService();
     apisoal.setUrl(url + target).setMethod('GET').addHeader('x-apikey', myapi);
 
-    console.log(apisoal)
+    console.log("memuat soal")
 
     try {
         const result = await apisoal.execute();
@@ -319,6 +319,7 @@ async function getSoal() {
     } catch (error) {
         console.error('Gagal:', error);
         errMsg.textContent = error;
+        alert('silakan refresh ulang halaman');
         let aLink = document.createElement('a')
         aLink.href = document.location.href;
         aLink.click()
