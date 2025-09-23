@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nilai 4');
+alert('Server dalam perawatan, akses dibatasi, nilai 5');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -100,8 +100,11 @@ function evaluateAnswer(questionNum) {
         const score = Math.min(Math.round(keywordScore + lengthScore + answerMatch), 100);
         console.log(score)
         console.log(keywordScore)
+        console.log(typeof keywordScore)
         console.log(lengthScore)
+        console.log(typeof lengthScore)
         console.log(answerMatch)
+        console.log(typeof answerMatch)
         tmpDataJawaban['score'] = score
 
         scores[questionIndex] = score;
@@ -372,7 +375,7 @@ function getNilaiNLP(referenceData, value) {
     try {
         let results = fuse.search(value);
         results = results[0];
-        return (1 - parseFloat(results.score.toFixed(4)));
+        return (1 - results.score);
     } catch (e) {
         alert('Mohon dijawab dengan benar');
         return 0;
