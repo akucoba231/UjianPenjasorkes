@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nila3i');
+alert('Server dalam perawatan, akses dibatasi, nilai 4');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -91,7 +91,7 @@ function evaluateAnswer(questionNum) {
         }
         else {
             const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
-            const lengthScore = Math.min(parseFloat((answer.length / questionLength).toFixed(4)) * 40, 40); // tadinya 30
+            const lengthScore = Math.min((answer.length / questionLength) * 40, 40); // tadinya 30
 
         const answerMatch = (nilaiNLP) * 30; //tadinya 20 Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
 
@@ -124,9 +124,9 @@ function evaluateAnswer(questionNum) {
         resultElement.innerHTML = `
             <h4>Skor: ${score}/100</h4>
             <div class="feedback">${feedback}</div>
-            <p><strong>Nilai panjang jawaban</strong> ${(lengthScore / 30).toFixed(4) * 100}%</p>
-            <p><strong>Kata kunci yang ditemukan:</strong> ${(keywordCount / question.keyword.length).toFixed(4) * 100}%</p>
-            <p><strong>Kesesuaian jawaban (NLP):</strong> ${(answerMatch / 20).toFixed(4) * 100}%</p>
+            <p><strong>Nilai panjang jawaban</strong> ${(lengthScore / 30) * 100}%</p>
+            <p><strong>Kata kunci yang ditemukan:</strong> ${(keywordCount / question.keyword.length) * 100}%</p>
+            <p><strong>Kesesuaian jawaban (NLP):</strong> ${(answerMatch / 20) * 100}%</p>
             <div class="advice-section">
         `;
         if (score < 60) {
