@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nila2i');
+alert('Server dalam perawatan, akses dibatasi, nila3i');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -372,7 +372,7 @@ function getNilaiNLP(referenceData, value) {
     try {
         let results = fuse.search(value);
         results = results[0];
-        return (1 - results.score.toFixed(4));
+        return (1 - parseFloat(results.score.toFixed(4)));
     } catch (e) {
         alert('Mohon dijawab dengan benar');
         return 0;
