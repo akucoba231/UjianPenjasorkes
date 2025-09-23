@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, nilai 9');
+alert('Server dalam perawatan, akses dibatasi, revisi 10');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -72,7 +72,7 @@ function evaluateAnswer(questionNum) {
     setTimeout(() => {
         loadingElement.style.display = "none";
         let nilaiNLP = 0;
-        nilaiNLP = getNilaiNLP(question.ideal, answer);
+        nilaiNLP = getNilaiNLP(question.keyword.join(', '), answer); //harusnya question.ideal
         if (!Array.isArray(question.keyword)) {
             question.keyword = question.keyword.split(',');
         }
@@ -93,7 +93,9 @@ function evaluateAnswer(questionNum) {
             //console.log("jwb : " + answer.length)
             //console.log("ideal : " + questionLength)
             const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
-            const lengthScore = Math.min((answer.length / questionLength) * 40, 40); // tadinya 30
+            //const lengthScore = Math.min((answer.length / questionLength) * 40, 40); // tadinya 30
+            const lengthScore = Math.min((answer.length / question.keyword.join(' ').length) * 40, 40); // tadinya 30
+            
 
         const answerMatch = (nilaiNLP) * 30; //tadinya 20 Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
 
