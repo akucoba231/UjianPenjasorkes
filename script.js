@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, revisi 12');
+alert('Server dalam perawatan, akses dibatasi, revisi 13');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -319,6 +319,9 @@ async function getSoal() {
     } catch (error) {
         console.error('Gagal:', error);
         errMsg.textContent = error;
+        let aLink = document.createElement('a')
+        aLink.href = document.location.href;
+        aLink.click()
     }
     writeQuestion();
 }
@@ -704,8 +707,14 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
         console.log(response);
         if(response.length >= 1){
             errMsg.textContent = "error: Akses dibatasi";
-            alert("Anda telah mengerjakan ujian ini, tidak dapat mengerjakan ujian ulang");
-            forbidden("Tidak diperbolehkan mengerjakan ujian dua kali.");
+            //alert("Anda telah mengerjakan ujian ini, tidak dapat mengerjakan ujian ulang");
+            if(confirm("Anda telah mengerjakan ujian ini, mengerjakan ujian ulang akan menghapus data sebelumnya, lanjutkan ?")){
+              alert(response.id_lembar_ujian)
+            }
+            else {
+            forbidden("Tidak diperbolehkan mengerjakan ujian dua kali, kecuali ada masalah teknis.");
+            }
+            //forbidden("Tidak diperbolehkan mengerjakan ujian dua kali.");
         }
         else {
             loadScreen();
