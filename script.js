@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, revisi 11');
+alert('Server dalam perawatan, akses dibatasi, revisi 12');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -72,7 +72,7 @@ function evaluateAnswer(questionNum) {
     setTimeout(() => {
         loadingElement.style.display = "none";
         let nilaiNLP = 0;
-        nilaiNLP = getNilaiNLP(question.ideal, answer); //harusnya question.ideal
+        nilaiNLP = getNilaiNLP(question.keyword, answer); //harusnya question.ideal
         if (!Array.isArray(question.keyword)) {
             question.keyword = question.keyword.split(',');
         }
