@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, revisi 15');
+alert('Server dalam perawatan, SS jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -11,6 +11,16 @@ let datadiri = {};
 
 let id_lembar_ujian = 0;
 let id_lembar_ujian_change = 0;
+
+// untuk NLP baru USE
+let modelUSE;
+(async () => {
+    //document.getElementById("hasil").textContent = "Loading model semantic...";
+    modelUSE = await use.load();
+    alert('Model NLP Baru, siap.')
+    //document.getElementById("hasil").textContent = "Model siap, silakan uji!";
+})();
+
 
 // Fungsi untuk membuat elemen soal
 function createQuestionElement(questionObj) {
@@ -33,7 +43,7 @@ function createQuestionElement(questionObj) {
 }
 
 // Fungsi evaluasi jawaban
-function evaluateAnswer(questionNum) {
+async function evaluateAnswer(questionNum) {
     //console.log(questionNum)
     const questionIndex = questionNum;
     const question = questionsData[questionIndex];
@@ -57,6 +67,8 @@ function evaluateAnswer(questionNum) {
         "score": 0
     }
 
+    
+
     if (!answer) {
         alert("Silakan tulis jawaban terlebih dahulu!");
         return;
@@ -69,21 +81,35 @@ function evaluateAnswer(questionNum) {
     loadingElement.style.display = "block";
     resultElement.style.display = "none";
 
-    setTimeout(() => {
+    //setTimeout(() => {
         loadingElement.style.display = "none";
-        let nilaiNLP = 0;
-        nilaiNLP = getNilaiNLP(question.keyword, answer); //harusnya question.ideal
-        if (!Array.isArray(question.keyword)) {
-            question.keyword = question.keyword.split(',');
-        }
-        let keywordCount = 0;
-        question.keyword.forEach(keyword => {
-            if (answer.toString().toLowerCase().includes(keyword.toLowerCase().trim())) {
-                keywordCount++;
-                //console.log(keyword);
-            }
-        });
-        if(nilaiNLP <= 0){
+        
+        // kode di bawah menggunakan fuse.js 
+        
+        let nilaiNLP = [];
+        //let tmpNLP = getNilaiNLP(question.keyword, answer);
+        //console.log("dari keyword : " + tmpNLP);
+        nilaiNLP = await getNilaiNLP(question.ideal, answer); // dengan USE nilainya array //harusnya question.ideal
+        //console.log("dari ideal : " + nilaiNLP);
+        // ini untuk mencari nilai terbaik
+        // if(tmpNLP > nilaiNLP){
+        //     nilaiNLP = tmpNLP;
+        // }
+
+        // pencarian kata kunci bisa dihindari
+        // if (!Array.isArray(question.keyword)) {
+        //     question.keyword = question.keyword.split(',');
+
+        // }
+        // let keywordCount = 0;
+        // question.keyword.forEach(keyword => {
+        //     if (answer.toString().toLowerCase().includes(keyword.toLowerCase().trim())) {
+        //         keywordCount++;
+        //         //console.log(keyword);
+        //     }
+        // });
+
+        if(nilaiNLP['similarity'] <= 0){
             // do not do anything
             answerElement.focus();
             tombolEvaluasi.removeAttribute('disabled');
@@ -92,13 +118,25 @@ function evaluateAnswer(questionNum) {
         else {
             //console.log("jwb : " + answer.length)
             //console.log("ideal : " + questionLength)
-            const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
+            // diganti karena USE
+            //const keywordScore = (keywordCount / question.keyword.length) * 30; //tadinya 50
             //const lengthScore = Math.min((answer.length / questionLength) * 40, 40); // tadinya 30
-            const lengthScore = Math.min((answer.length / question.keyword.join(' ').length) * 40, 40); // tadinya 30
             
+            //const lengthScore = Math.min((answer.length / question.keyword.join(' ').length) * 40, 40); // tadinya 30
+            const lengthScore = Math.min((answer.length / question.keyword.length) * 40, 40); // tadinya 30
+            
+            console.log(nilaiNLP);
+            console.log(typeof nilaiNLP);
+            for(let i in nilaiNLP){
+                console.log(typeof nilaiNLP[i] + " : " + nilaiNLP[i]);
+            }
 
-        const answerMatch = (nilaiNLP) * 30; //tadinya 20 Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
+            const keywordScore = nilaiNLP['semantic']/100 * 30
+            const answerMatch = nilaiNLP['similarity']/100 * 30
+            
+            //const answerMatch = (nilaiNLP) * 30; //tadinya 20 Math.random() * 20; //ini untuk NLP ideal answer: (key) : ideal 
 
+        
         //jsonCheck(question.ideal);
 
         const score = Math.min(Math.round(keywordScore + lengthScore + answerMatch), 100);
@@ -168,7 +206,7 @@ function evaluateAnswer(questionNum) {
 
         updateTotalScore(tmpDataJawaban);
     }
-}, 1500);
+//}, 1500);
 }
 
 //let test;
@@ -211,6 +249,8 @@ function updateTotalScore(dataJawaban) {
         }, 1000);
     }
 }
+
+
 
 // Inisialisasi saat halaman dimuat
 window.onload = function () {
@@ -255,7 +295,8 @@ function sleep(ms) {
 // untuk memeriksa ujian aktif 
 async function cekAktif(token) {
     loadScreen();
-    const target = 'tema';
+    let tmpFilter = getFilter({"token":token});
+    const target = 'tema' + tmpFilter;
     const apisoal = new ApiService();
     apisoal.setUrl(url + target).setMethod('GET').addHeader('x-apikey', myapi);
 
@@ -297,14 +338,22 @@ async function cekAktif(token) {
  }
 } catch (error) {
     console.error('Gagal:', error);
-    errMsg.textContent = "error: " + error;
+    errMsg.textContent = "error: tidak dapat membuka ujian, " + error;
+    localStorage.setItem('token',token);
+    alert('Membuka ulang ujian.');
+    setTimeout(()=>{
+        loadScreen();
+        let re = localStorage.getItem('token');
+        cekAktif(re);
+    }, 1500);
 }
 }
 
 // untuk mendapatkan soal
 async function getSoal() {
     loadScreen();
-    const target = 'soal';
+    let tmpFilter = getFilter({"id_tema":ujian.id})
+    const target = 'soal' + tmpFilter;
     const apisoal = new ApiService();
     apisoal.setUrl(url + target).setMethod('GET').addHeader('x-apikey', myapi);
 
@@ -318,11 +367,12 @@ async function getSoal() {
         loadScreen();
     } catch (error) {
         console.error('Gagal:', error);
-        errMsg.textContent = error;
-        alert('silakan refresh ulang halaman');
-        let aLink = document.createElement('a')
-        aLink.href = document.location.href;
-        aLink.click()
+        errMsg.textContent = "Error : tidak dapat mengambil soal, " + error;
+        alert("mencoba mengambil soal ulang");
+        setTimeout(()=>{
+            loadScreen();
+            getSoal();
+        }, 2000)
     }
     writeQuestion();
 }
@@ -357,15 +407,44 @@ function loadScreen() {
 
 //nlp ini akan memeriksa kesesuaian jawaban dengan jawaban ideal
 
-function getNilaiNLP(referenceData, value) {
+async function getNilaiNLP(referenceData, value) {
     //referenceData = JSON.parse(JSON.stringify(referenceData));
     referenceData = cleanTextFromWord(referenceData);
     value = cleanTextFromWord(value)
+
+      // --- 1. String Similarity ---
+      const skorString = stringSimilarity.compareTwoStrings(referenceData, value);
+
+      // --- 2. Semantic Similarity (USE) ---
+      const embeddings = await modelUSE.embed([referenceData, value]);
+      const vektor1 = embeddings.arraySync()[0];
+      const vektor2 = embeddings.arraySync()[1];
+
+      let dot=0, norm1=0, norm2=0;
+      for (let i=0; i<vektor1.length; i++) {
+        dot += vektor1[i]*vektor2[i];
+        norm1 += vektor1[i]**2;
+        norm2 += vektor2[i]**2;
+      }
+      const skorSemantik = dot / (Math.sqrt(norm1) * Math.sqrt(norm2));
+
+      // output
+      let output = {
+        "similarity" : Math.round(parseFloat(skorString)*10000)/100,
+        "semantic" : Math.round(parseFloat(skorSemantik)*10000)/100
+      }
+      console.log(output);
+
+      return output;
+
+    
+    // ini adalah fuse.js
+    /*
     const options = {
         keys: ['text'],
         includeScore: true,
         includeMatches: true,
-        threshold: 0.6,
+        threshold: 0.8,
         minMatchCharLength: 2,
         ignoreLocation: true,
         findAllMatches: true
@@ -388,6 +467,7 @@ function getNilaiNLP(referenceData, value) {
         alert('Mohon dijawab dengan benar');
         return 0;
     }
+    */
 }
 
 // JSON parse checker
@@ -471,6 +551,7 @@ async function sendToServer(data) {
     let settings = {
         "async": true,
         "crossDomain": true,
+        "timeout": 120000,
         "url": url + "lembarujian",
         "method": "POST",
         "headers": {
@@ -492,7 +573,15 @@ async function sendToServer(data) {
         id_lembar_ujian_change = response._id;
         loadScreen();
     }).fail(function (e) {
-        errMsg.textContent = "error: " + JSON.stringify(e);
+        errMsg.textContent = "error: tidak dapat mengirim data diri, " + JSON.stringify(e);
+        localStorage.setItem('dataAwal', JSON.stringify(data));
+        alert("Mencoba mengirim ulang data");
+        setTimeout(()=>{
+            loadScreen();
+            let re = localStorage.getItem('dataAwal');
+            re = JSON.parse(re);
+            sendToServer(re);
+        }, 1500)
     });
     }, delay);
 }
@@ -505,6 +594,7 @@ function kirimJawaban(jawaban) {
         "crossDomain": true,
         "url": url + "jawaban",
         "method": "POST",
+        "timeout" : 120000,
         "headers": {
             "content-type": "application/json",
             "x-apikey": myapi,
@@ -523,7 +613,16 @@ function kirimJawaban(jawaban) {
         console.log(response);
         //loadScreen();
     }).fail(function (e) {
-        errMsg.textContent = "error: " + JSON.stringify(e);
+        errMsg.textContent = "error: tidak dapat mengirim jawaban, " + JSON.stringify(e) + " | mencoba mengirim ulang.";
+        localStorage.setItem('jawaban', JSON.stringify(jawaban));
+        alert('Mencoba mengirim jawaban ulang');
+        
+        setTimeout(()=>{
+            loadScreen();
+            let re = localStorage.getItem('jawaban');
+            re = JSON.parse(re);
+            kirimJawaban(re)
+        }, 3000);
     });
     }, delay);
 
@@ -540,6 +639,7 @@ function updateNilai(newTotal) {
         "crossDomain": true,
         "url": url + "lembarujian/" + id_lembar_ujian_change,
         "method": "PUT",
+        "timeout": 120000,
         "headers": {
             "content-type": "application/json",
             "x-apikey": myapi,
@@ -558,7 +658,15 @@ function updateNilai(newTotal) {
         console.log(response);
         loadScreen();
     }).fail((e) => {
-        errMsg.textContent = "error: " + e.toString();
+        errMsg.textContent = "error: tidak dapat mengubah total nilai, " + e.toString() + " | mencoba mengirim ulang";
+        localStorage.setItem('newTotal',JSON.stringify(newTotal));
+        alert('Update nilai akan diulangi');
+        setTimeout(()=>{
+            loadScreen();
+        let re = localStorage.getItem('newTotal');
+        re = JSON.parse(re);
+        updateNilai(re);
+        },2000);
     })
     }, delay);
 }
@@ -689,6 +797,7 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
         "crossDomain": true,
         "url": url + carilembarujian + "?q=" + search,
         "method": "GET",
+        "timeout": 120000,
         "headers": {
             "content-type": "application/json",
             "x-apikey": myapi,
@@ -710,7 +819,11 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
             errMsg.textContent = "error: Akses dibatasi";
             //alert("Anda telah mengerjakan ujian ini, tidak dapat mengerjakan ujian ulang");
             if(confirm("Anda telah mengerjakan ujian ini, mengerjakan ujian ulang akan menghapus data sebelumnya, lanjutkan ?")){
-              alert(response.id_lembar_ujian)
+              loadScreen();
+              setTimeout(()=>{
+                deleteJawaban(response[0].id_lembar_ujian);
+              }, 7000);
+              uploadNilai(1);
             }
             else {
             forbidden("Tidak diperbolehkan mengerjakan ujian dua kali, kecuali ada masalah teknis.");
@@ -723,7 +836,84 @@ function cekNamaEmail(id_tema = 0, nama = "", email = ""){ //bisa ditambahkan em
         }
         
     }).fail(function (e) {
-        errMsg.textContent = "error: " + JSON.stringify(e);
+        errMsg.textContent = "error: tidak dapat terhubung ke server"// + JSON.stringify(e);
+        localStorage.setItem('ujianId',ujian.id)
+        localStorage.setItem('datadiriNama', datadiri.nama);
+        localStorage.setItem('datadiriEmail', datadiri.email);
+        alert("Pengecekan akan dilakukan ulang");
+        setTimeout(()=>{
+            loadScreen();
+            let re = localStorage.getItem('ujianId');
+            let re1 = localStorage.getItem('datadiriNama');
+            let re2 = localStorage.getItem('datadiriEmail');
+            
+            cekNamaEmail(re, re1, re2);
+        }, 1200);
     });
     }, delay);
+}
+
+
+// fungsi tambahan untuk mengurangi beban server
+function getFilter(obj = {}){
+    let search = obj;
+    // search["id_tema"] = ujian.id
+
+    // if(email == ""){
+    //     search["nama"] = nama;
+    // }
+    // else {
+    //     search["email"] = email;
+    // }
+
+    search = JSON.stringify(search).replace(/\\"/g,'');
+    let tmp = search;
+    if(slimFr == true){
+        search = "/?q=" + tmp;
+    }
+    else {
+        search = "?q=" + tmp;
+    }
+    return search; // string
+}
+
+
+function deleteJawaban(id_lembar_ujian){
+    loadScreen()
+    
+    let delsettings = {
+        "async": true,
+        "crossDomain": true,
+        "url": url + "lembarujian/" + id_lembar_ujian,
+        "method": "DELETE",
+        "timeout": 120000,
+        "headers": {
+            "content-type": "application/json",
+            "x-apikey": myapi,
+            "cache-control": "no-cache"
+        },
+        "processData": false,
+        "data": null
+    }
+
+    // delay acak 0–3000ms supaya tidak semua client barengan
+    const delay = Math.floor(Math.random() * 3000);
+    //await sleep(delay);
+
+    setTimeout(()=>{
+    $.ajax(delsettings).done(function (response) {
+        console.log(response);
+        loadScreen();
+    }).fail((e) => {
+        errMsg.textContent = "error: tidak dapat menghapus data lama, " + e.toString() + " | mencoba menghapus ulang";
+        localStorage.setItem('idLembar', id_lembar_ujian);
+        
+        setTimeout(()=>{
+        loadScreen();
+        let re = localStorage.getItem('idLembar');
+        re = JSON.parse(re);
+        deleteJawaban(re);
+        },2000);
+    })
+    }, delay);   
 }
