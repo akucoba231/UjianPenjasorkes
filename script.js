@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, akses dibatasi, revisi 14');
+alert('Server dalam perawatan, akses dibatasi, revisi 15');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -644,7 +644,7 @@ function setBanner(base64){
     }
     else {
         banner.parentNode.style.display = "block";
-        banner.src = base64;
+        banner.src = url + "uploads/" + base64;
     }
 }
 
