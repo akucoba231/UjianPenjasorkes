@@ -4,7 +4,7 @@
     const listUrl = [
         "https://nlpdata-5393.restdb.io/rest/",
         "https://nlpdata2-9d3f.restdb.io/rest/",
-        "https://ujianpenjas.my.id/aplikasi-slim/public/"
+        "https://ujianpenjas2.my.id/aplikasi-slim/public/"
     ];
 
     const listApi = [
