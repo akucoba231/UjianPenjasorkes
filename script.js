@@ -1,4 +1,4 @@
-alert('Server dalam perawatan, SS jika terjadi error, terima kasih');
+alert('Server 2 dalam perawatan, SS jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -74,8 +74,8 @@ async function evaluateAnswer(questionNum) {
         return;
     }
     else {
-        tombolEvaluasi.setAttribute('disabled', '');
-        
+        //tombolEvaluasi.setAttribute('disabled', '');
+        tombolEvaluasi.textContent = "coba lagi ?";
         tombolEvaluasi.setAttribute('class', 'disabled');
     }
 
