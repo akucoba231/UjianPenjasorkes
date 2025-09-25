@@ -74,7 +74,8 @@ async function evaluateAnswer(questionNum) {
         return;
     }
     else {
-        tombolEvaluasi.setAttribute('disabled', '');
+        //tombolEvaluasi.setAttribute('disabled', '');
+        tombolEvaluasi.textContent = "Coba lagi";
         tombolEvaluasi.setAttribute('class', 'disabled');
     }
 
