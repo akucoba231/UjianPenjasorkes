@@ -14,7 +14,7 @@
     ]
 
     let changeUrl = 0;
-    let server1 = listUrl[3];
+    let server2 = listUrl[3];
     url = listUrl[2];
     myapi = listApi[changeUrl];
     let slimFr = true;
