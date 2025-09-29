@@ -130,23 +130,43 @@
             <div class="input-group">
                 <label for="token">Token</label>
                 <input type="text" id="token" name="token" placeholder="Masukkan token Anda di sini" required>
+                <select id="server" required>
+                    <option value="0">--Pilih server--</option>
+                    <option value="2" data-keterangan="server utama">Server 1 (Absen Ganjil)</option>
+                    <option value="3" data-keterangan="server utama">Server 2 (Absen Genap)</option>
+                </select>
             </div>
             <button type="submit" class="submit-button" id="submit">Submit</button>
         </form>
     </div>
 
-    <a id="redirect" href="utama.html?token=">klik</a>
+    <a id="redirect" href="utama.html?">klik</a>
     
     <script>
-      let token = document.getElementById('token')
-      let submit = document.getElementById('submit')
+      
+      let token = document.getElementById('token');
+      let server = document.getElementById('server');
+      let submit = document.getElementById('submit');
       submit.onclick = (e)=>{
         e.preventDefault()
         //let tmp = window.location.href.split('index.html')[0]
         let a = document.getElementById('redirect');
-        let tmp = a.href;
-        a.href = tmp + token.value;
-        a.click();
+        if(server.value <= 0){
+            alert("Mohon pilih salah satu server");
+            server.focus();
+        }
+        else {
+            let tmp = a.href;
+            let svr = "";
+            if(server.value == 2){
+                svr = url; // server utama - ganjil
+            }
+            else if(server.value == 3){
+                svr = server2; // server 2 - genap
+            }
+            a.href = tmp + "?" + "server=" + svr + "&" + + "token=" + token.value;
+            a.click();
+        }
       }
     </script>
 </body>
