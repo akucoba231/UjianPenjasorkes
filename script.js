@@ -1,4 +1,4 @@
-alert('Server 2 dalam uji coba, SS jika terjadi error, terima kasih');
+alert('Server 2 dalam uji coba 2, SS jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -94,7 +94,8 @@ async function evaluateAnswer(questionNum) {
     //persiapan jawaban untuk dikirim
     let tmpDataJawaban = {
         "id_jawaban": 0,
-        "id_lembar_ujian": id_lembar_ujian,
+        "id_tema" : ujian.id,
+        "id_lembar_ujian": id_lembar_ujian_change,
         "id_soal": question.id,
         "judul_soal": question.judul_soal,
         "jawaban": answer,
