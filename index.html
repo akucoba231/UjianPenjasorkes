@@ -158,13 +158,8 @@
         else {
             let tmp = a.href;
             let svr = "";
-            if(server.value == 2){
-                svr = url; // server utama - ganjil
-            }
-            else if(server.value == 3){
-                svr = server2; // server 2 - genap
-            }
-            a.href = tmp + "?" + "server=" + svr + "&" + + "token=" + token.value;
+           
+            a.href = tmp + "?" + "server=" + server.value + "&" + + "token=" + token.value;
             a.click();
         }
       }
