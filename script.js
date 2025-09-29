@@ -43,6 +43,14 @@ let modelUSE;
     }
     catch(err){
       status.textContent = "Model NLP gagal dimuat, silakan refresh/ muat ulang halaman.";
+      // Untuk memuat ulang model USE
+      /*
+      alert('Refresh Halaman!')
+      let refresh = window.location.href;
+      let aRef = document.createElement('a');
+      aRef.href = refresh;
+      aRef.click();
+      */
     }
     //document.getElementById("hasil").textContent = "Model siap, silakan uji!";
 })();
@@ -144,6 +152,7 @@ async function evaluateAnswer(questionNum) {
         //jsonCheck(question.ideal);
 
         const score = Math.min(Math.round(keywordScore + lengthScore + answerMatch), 100);
+        tmpDataJawaban['jawaban'] = score.toFixed(2) + " | " + answer;
         //console.log(score)
         //console.log(keywordScore)
         //console.log(typeof keywordScore)
