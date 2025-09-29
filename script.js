@@ -1,4 +1,4 @@
-//alert('Server 2 dalam perawatan, SS jika terjadi error, terima kasih');
+alert('Server 2 dalam uji coba, SS jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -800,7 +800,10 @@ function forbidden(pesan){
 
 function getToken(){
   let tmp = window.location.href;
-  tmp = tmp.split('?token=');
+  tmp = tmp.split('token=');
+  let tmpSvr = tmp[0].split('&')[0]; // untuk membuang '&'
+  tmpSvr = tmpSvr.split('?server=')[1]; // harusnya jawaban angka (untuk memilih server);
+  url = listUrl[tmpSvr];
   if(tmp.length > 1){
       return tmp[1];
   }
