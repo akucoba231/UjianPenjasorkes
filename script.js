@@ -1,4 +1,4 @@
-alert('SS jika terjadi error, terima kasih');
+alert('SS saja jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -31,7 +31,9 @@ let modelUSE;
     //document.getElementById("hasil").textContent = "Loading model semantic...";
     let status = document.getElementById('statusNLP')
     try {
-    modelUSE = await use.load();
+    modelUSE = await use.load({
+        modelUrl: 'https://storage.googleapis.com/tfjs-models/savedmodel/universal_sentence_encoder/model.json'
+    });
     if(status == null){
       
     }
