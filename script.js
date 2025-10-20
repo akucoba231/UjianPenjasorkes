@@ -1,4 +1,4 @@
-alert('Server 2 dalam uji coba 2, SS jika terjadi error, terima kasih');
+alert('SS jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
