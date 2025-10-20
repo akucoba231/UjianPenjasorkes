@@ -1,4 +1,4 @@
-alert('Server 2 dalam uji coba 2, SS jika terjadi error, terima kasih');
+alert('Silakan ScreenShot jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -11,6 +11,8 @@ let datadiri = {};
 
 let id_lembar_ujian = 0;
 let id_lembar_ujian_change = 0;
+
+let ret = 0;
 
 // loading model NLP 
 function loadModel(){
@@ -42,7 +44,22 @@ let modelUSE;
     }
     }
     catch(err){
-      status.textContent = "Model NLP gagal dimuat, silakan refresh/ muat ulang halaman.";
+      status.textContent = "Mohon maaf Model NLP gagal dimuat, model digunakan untuk mengevaluasi jawaban, silakan refresh/ muat ulang halaman.";
+      status.style.height = "100vh";
+      status.style.display = "flex";
+      status.style.flexDirection = "column";
+      status.style.justifyContent = "center";
+      status.style.alignItems = "center";
+      status.style.gap = "2em";
+      status.style.fontWeight = "bold";
+      status.style.fontSize = "1.5em";
+
+      let muatUlang = document.createElement('a')
+      muatUlang.href = document.location.href
+      muatUlang.textContent = "Muat ulang halaman";
+
+      status.appendChild(muatUlang)
+
       // Untuk memuat ulang model USE
       /*
       alert('Refresh Halaman!')
@@ -112,6 +129,7 @@ async function evaluateAnswer(questionNum) {
         tombolEvaluasi.setAttribute('disabled', '');
         //tombolEvaluasi.textContent = "coba lagi ?";
         tombolEvaluasi.setAttribute('class', 'disabled');
+        tombolEvaluasi.textContent = "Sedang mengevaluasi jawaban";
     }
 
     loadingElement.style.display = "block";
@@ -239,10 +257,16 @@ async function evaluateAnswer(questionNum) {
         //     }
         // });
         } catch(e){
+          ret++;
           answerElement.focus();
           tombolEvaluasi.removeAttribute('disabled');
           tombolEvaluasi.removeAttribute('class');
-          tombolEvaluasi.textContent = "coba lagi";
+          tombolEvaluasi.textContent = "coba lagi " + ret;
+          if(ret > 3){
+            tombolEvaluasi.setAttribute('class','disabled');
+            tombolEvaluasi.setAttribute('disabled','disabled');
+            tombolEvaluasi.textContent = "Model NLP tidak menanggapi, coba refresh halaman";
+          }
         }
         /*
         if(typeof nilaiNLP['similarity'] == "undefined"){
