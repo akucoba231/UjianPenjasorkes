@@ -425,7 +425,7 @@ async function cekAktif(token) {
             }
         }
         else {
-         forbidden("Anda tidak memiliki akses ke halaman ini");
+         forbidden("Token salah / tidak ada, perhatikan penulisan besar-kecil huruf.");
      }
  }
 } catch (error) {
