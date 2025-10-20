@@ -1,4 +1,4 @@
-alert('Silakan ScreenShot jika terjadi error, terima kasih');
+alert('Server 2 dalam uji coba 2, SS jika terjadi error, terima kasih');
 // untuk info ujian
 let ujian;
 // untuk menampung pertanyaan
@@ -45,20 +45,20 @@ let modelUSE;
     }
     catch(err){
       status.textContent = "Mohon maaf Model NLP gagal dimuat, model digunakan untuk mengevaluasi jawaban, silakan refresh/ muat ulang halaman.";
-      status.style.height = "100vh";
-      status.style.display = "flex";
-      status.style.flexDirection = "column";
-      status.style.justifyContent = "center";
-      status.style.alignItems = "center";
-      status.style.gap = "2em";
-      status.style.fontWeight = "bold";
-      status.style.fontSize = "1.5em";
+      // status.style.height = "100vh";
+      // status.style.display = "flex";
+      // status.style.flexDirection = "column";
+      // status.style.justifyContent = "center";
+      // status.style.alignItems = "center";
+      // status.style.gap = "2em";
+      // status.style.fontWeight = "bold";
+      // status.style.fontSize = "1.5em";
 
-      let muatUlang = document.createElement('a')
-      muatUlang.href = document.location.href
-      muatUlang.textContent = "Muat ulang halaman";
+      // let muatUlang = document.createElement('a')
+      // muatUlang.href = document.location.href
+      // muatUlang.textContent = "Muat ulang halaman";
 
-      status.appendChild(muatUlang)
+      // status.appendChild(muatUlang)
 
       // Untuk memuat ulang model USE
       /*
